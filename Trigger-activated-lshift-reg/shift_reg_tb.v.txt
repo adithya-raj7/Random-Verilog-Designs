@@ -1,0 +1,32 @@
+
+module test;
+
+  reg reset = 0;
+  reg [7:0] in = 8'hFF;
+  reg trigger = 0;
+  initial begin
+    $dumpfile("test.vcd");
+    $dumpvars(0,test);
+
+    # 17 reset = 0;
+    # 11 reset = 1;
+    # 10 trigger = 1;
+    # 5  trigger = 0;
+    # 10 trigger = 1;
+    # 5  trigger = 0;
+    # 10 trigger = 1;
+    # 10 trigger = 0;
+    # 50  reset = 0;
+    # 100 $finish;
+  end
+
+  reg clk = 0;
+  always #1 clk =!clk;
+
+  wire [7:0] value;
+  shift_reg c1 (value, clk, reset, in, trigger);
+
+  initial
+    $monitor("At time %t, value =%h (%0d)", $time, value, value);
+
+endmodule
