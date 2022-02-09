@@ -351,6 +351,8 @@ module logic_gate_mux(
       ERROR  :
       begin
         nxt_cnt_en        = 1'b0;                          //Counter enable signal deasserted
+        nxt_time_lim_err  = 1'b0;                          //Error signals cleared
+        nxt_inp_num_err   = 1'b0;
 
         if(err_clr)
         begin
