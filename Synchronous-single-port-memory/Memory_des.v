@@ -49,8 +49,6 @@ module single_port_memory(
   reg                       nxt_error;
   reg [15 : 0]              nxt_out_wr_data;
   reg [15 : 0]              nxt_rd_data;
-  reg [15 : 0]              nxt_memory[0 : 15];
-
 
   wire [DATA_WIDTH-1 : 0]   wr_data;
   wire [ADDR_WIDTH-1 : 0]   addr;
@@ -68,11 +66,6 @@ module single_port_memory(
     nxt_rd_data                          = rd_data;
     nxt_out_wr_data                      = out_wr_data;
     nxt_state                            = state;
-
-    for(i =0; i< DEPTH; i=i+1)
-    begin
-      nxt_memory[i]                      = memory[i];
-    end
 
 //State Machine
     case (state)
@@ -146,11 +139,6 @@ module single_port_memory(
       state                              <= nxt_state;
       rd_data                            <= nxt_rd_data;
       error                              <= nxt_error;
-
-      for(i =0;i<DEPTH;i=i+1)
-      begin
-        memory[i]                        <=nxt_memory[i];
-      end
     end
   end
 endmodule
